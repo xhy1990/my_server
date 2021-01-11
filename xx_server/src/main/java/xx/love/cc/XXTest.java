@@ -16,7 +16,7 @@ public class XXTest {
     public static List<Integer> list = Collections.synchronizedList(new ArrayList<>());
 
     public static void main(String[] args) {
-        for(int i=0;i<=100000;i++){
+        for (int i = 0; i <= 100000; i++) {
             list.add(i);
         }
 
@@ -32,38 +32,34 @@ public class XXTest {
     }
 
 
-
-
-
-
 }
 
-class ThreadA implements Runnable{
+class ThreadA implements Runnable {
 
     @Override
     public void run() {
-        List<Integer> tempList = XXTest.list.stream().filter(i -> i>10000).collect(Collectors.toList());
-        for(int i : tempList){
+        List<Integer> tempList = XXTest.list.stream().filter(i -> i > 10000).collect(Collectors.toList());
+        for (int i : tempList) {
             i++;
-//            System.out.println(i++);
+            System.out.println(i++);
         }
     }
 }
 
-class ThreadB implements Runnable{
+class ThreadB implements Runnable {
     @Override
     public void run() {
-        while(XXTest.list.size() > 0){
+        while (XXTest.list.size() > 0) {
             XXTest.list.remove(0);
             System.out.println(XXTest.list.size());
         }
     }
 }
 
-class ThreadC implements Runnable{
+class ThreadC implements Runnable {
     @Override
     public void run() {
-        while(XXTest.list.size() < 1000000){
+        while (XXTest.list.size() < 1000000) {
             XXTest.list.add(100);
             System.out.println(XXTest.list.size());
         }
