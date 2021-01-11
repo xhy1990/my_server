@@ -1,0 +1,6 @@
+*.class
+*.svn
+target/
+*.log
+.idea/
+.settings/
