@@ -5,6 +5,8 @@
 <Configuration status="WARN" monitorInterval="60">
     <Properties>
         <!-- ======================公共配置====================== -->
+        <!-- 日志文件输出目录 -->
+        <property name="basePath">D:/xx-file/log</property>
         <!-- 控制台默认输出格式,"%-5level":日志级别,"%l":输出完整的错误位置,是小写的L,因为有行号显示,所以影响日志输出的性能 %C:大写,类名;%M:方法名;%m:错误信息;%n:换行 -->
         <property name="console_log_pattern">[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%p] %C{1}.%M --> %m%n</property>
         <!-- 日志文件默认输出格式 -->
@@ -32,7 +34,7 @@
 <!--        </File>-->
 
         <!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
-        <RollingFile name="RollingFile" fileName="log/all.log" filePattern="log/$${date:yyyy-MM-dd}/all.log.%d{yyyy-MM-dd}-%i">
+        <RollingFile name="RollingFile" fileName="${basePath}/all.log" filePattern="${basePath}/$${date:yyyy-MM-dd}/all.log.%d{yyyy-MM-dd}-%i">
             <PatternLayout charset="UTF-8" pattern="${log_pattern}"/>
             <SizeBasedTriggeringPolicy size="${every_file_size}"/>
         </RollingFile>

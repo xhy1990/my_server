@@ -27,8 +27,6 @@ public class XXTest {
         a.start();
         b.start();
         c.start();
-
-
     }
 
 
@@ -41,7 +39,7 @@ class ThreadA implements Runnable {
         List<Integer> tempList = XXTest.list.stream().filter(i -> i > 10000).collect(Collectors.toList());
         for (int i : tempList) {
             i++;
-            System.out.println(i++);
+//            System.out.println(i++);
         }
     }
 }
