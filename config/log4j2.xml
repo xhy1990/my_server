@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 日志级别以及优先级排序: OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<!-- status用于设置log4j2本身内部的日志级别，可不设置 -->
+<!-- monitorInterval能够自动检测配置文件，单位是s，最小是5s -->
+<Configuration status="WARN" monitorInterval="60">
+    <Properties>
+        <!-- ======================公共配置====================== -->
+        <!-- 控制台默认输出格式,"%-5level":日志级别,"%l":输出完整的错误位置,是小写的L,因为有行号显示,所以影响日志输出的性能 %C:大写,类名;%M:方法名;%m:错误信息;%n:换行 -->
+        <property name="console_log_pattern">[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%p] %C{1}.%M --> %m%n</property>
+        <!-- 日志文件默认输出格式 -->
+        <property name="log_pattern">[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%p] %C{1}.%M --> %m%n</property>
+
+        <!-- 日志默认切割的最小单位 -->
+        <property name="every_file_size">500M</property>
+        <!-- 日志默认输出级别 -->
+        <property name="output_log_level">DEBUG</property>
+
+    </Properties>
+
+    <!-- 先定义所有的Appenders节点，常见的有三种子节点：Console、RollingFile、File -->
+    <Appenders>
+        <!-- 控制台输出 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <ThresholdFilter level="DEBUG" onMatch="ACCEPT" onMismatch="DENY"/>
+            <!--输出日志的格式-->
+            <PatternLayout charset="UTF-8" pattern="${console_log_pattern}"/>
+        </Console>
+        <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用-->
+<!--        <File name="log" fileName="log/test.log" append="false">-->
+<!--            <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] [%c] [%M]%m%n"/>-->
+<!--        </File>-->
+
+        <!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
+        <RollingFile name="RollingFile" fileName="log/all.log" filePattern="log/$${date:yyyy-MM-dd}/all.log.%d{yyyy-MM-dd}-%i">
+            <PatternLayout charset="UTF-8" pattern="${log_pattern}"/>
+            <SizeBasedTriggeringPolicy size="${every_file_size}"/>
+        </RollingFile>
+    </Appenders>
+    <!-- 定义Loggers节点，常见的有两种子节点：Root和Logger -->
+    <Loggers>
+        <!-- Root节点用来指定项目的根日志，如果没有单独指定Logger，那么就会默认使用该Root日志输出 -->
+        <Root level="${output_log_level}">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>
