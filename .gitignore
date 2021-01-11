@@ -1,6 +1,7 @@
 *.class
 *.svn
-target/
 *.log
+*.iml
 .idea/
 .settings/
+target/
