@@ -11,6 +11,7 @@
     <modules>
         <module>xx_server</module>
         <module>xx_core</module>
+        <module>xx_tools</module>
     </modules>
 
     <properties>
