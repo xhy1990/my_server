@@ -29,22 +29,34 @@
             <PatternLayout charset="UTF-8" pattern="${console_log_pattern}"/>
         </Console>
         <!--文件会打印出所有信息，这个log每次运行程序会自动清空，由append属性决定，这个也挺有用的，适合临时测试用-->
-<!--        <File name="log" fileName="log/test.log" append="false">-->
-<!--            <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] [%c] [%M]%m%n"/>-->
-<!--        </File>-->
+        <!--        <File name="log" fileName="log/test.log" append="false">-->
+        <!--            <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] [%c] [%M]%m%n"/>-->
+        <!--        </File>-->
 
         <!--这个会打印出所有的信息，每次大小超过size，则这size大小的日志会自动存入按年份-月份建立的文件夹下面并进行压缩，作为存档-->
-        <RollingFile name="RollingFile" fileName="${basePath}/all.log" filePattern="${basePath}/$${date:yyyy-MM-dd}/all.log.%d{yyyy-MM-dd}-%i">
+        <RollingFile name="File" fileName="${basePath}/all.log"
+                     filePattern="${basePath}/$${date:yyyy-MM-dd}/all.log.%d{yyyy-MM-dd}-%i">
             <PatternLayout charset="UTF-8" pattern="${log_pattern}"/>
             <SizeBasedTriggeringPolicy size="${every_file_size}"/>
         </RollingFile>
+
+        <RollingFile name="appServer" fileName="${basePath}/appServer.log"
+                     filePattern="${basePath}/$${date:yyyy-MM-dd}/appServer.log.%d{yyyy-MM-dd}-%i">
+            <PatternLayout charset="UTF-8" pattern="${log_pattern}"/>
+            <SizeBasedTriggeringPolicy size="${every_file_size}"/>
+        </RollingFile>
+
     </Appenders>
     <!-- 定义Loggers节点，常见的有两种子节点：Root和Logger -->
     <Loggers>
+        <logger name="appServer" additivity="true">
+            <appender-ref ref="appServer"/>
+        </logger>
+
         <!-- Root节点用来指定项目的根日志，如果没有单独指定Logger，那么就会默认使用该Root日志输出 -->
-        <Root level="${output_log_level}">
-            <AppenderRef ref="Console"/>
-            <AppenderRef ref="RollingFile"/>
+        <Root level="DEBUG">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="File"/>
         </Root>
     </Loggers>
 </Configuration>

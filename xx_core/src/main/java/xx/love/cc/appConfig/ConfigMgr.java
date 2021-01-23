@@ -9,6 +9,9 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.slf4j.Logger;
+import xx.love.cc.util.LoggerUtil;
+
 /**
  * 配置管理类
  *
@@ -16,7 +19,7 @@ import java.util.stream.Stream;
  * @date 2020/9/18 19:41
  */
 public class ConfigMgr {
-
+    private static final Logger log = LoggerUtil.testLogger;
     public static ServerConfig serverConfig;
 
     public static boolean init() {
@@ -26,6 +29,7 @@ public class ConfigMgr {
             e.printStackTrace();
             return false;
         }
+        log.debug("config加载完成！");
         return true;
     }
 

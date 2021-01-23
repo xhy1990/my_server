@@ -2,10 +2,11 @@ package xx.love.cc;
 
 import java.io.File;
 
-import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
+import org.slf4j.Logger;
 import xx.love.cc.appConfig.ConfigMgr;
+import xx.love.cc.util.LoggerUtil;
 
 /**
  * 启动入口
@@ -13,8 +14,9 @@ import xx.love.cc.appConfig.ConfigMgr;
  * @author xhy
  * @date 2020/9/18 16:51
  */
-@Slf4j
 public class AppServer {
+
+    private static final Logger log = LoggerUtil.appServerLogger;
 
     public static AppServer appServer;
     public static String configPath;

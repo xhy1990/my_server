@@ -12,6 +12,7 @@
         <module>xx_server</module>
         <module>xx_core</module>
         <module>xx_tools</module>
+        <module>xx_test</module>
     </modules>
 
     <properties>
@@ -20,12 +21,12 @@
 
     <dependencies>
         <!--使用了lombok插件-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.12</version>
-            <scope>provided</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.projectlombok</groupId>-->
+<!--            <artifactId>lombok</artifactId>-->
+<!--            <version>1.18.12</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
         <!--日志-->
         <!--log4j-core必须要引进来，否则项目里找不到，太恶心了！怀疑与log4j-api有冲突，可能与log4j-slf4j-impl内部顺序有关系-->
         <dependency>
