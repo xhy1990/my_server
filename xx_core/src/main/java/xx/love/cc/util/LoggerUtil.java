@@ -14,10 +14,25 @@ public class LoggerUtil {
     /**
      * appServer相关日志
      */
-    public static final Logger appServerLogger = LoggerFactory.getLogger("appServer");
+    private static final Logger appServerLogger = LoggerFactory.getLogger("appServer");
     /**
      * 测试日志
      */
-    public static final Logger testLogger = LoggerFactory.getLogger("test");
+    private static final Logger testLogger = LoggerFactory.getLogger("test");
+    /**
+     * netty相关日志
+     */
+    private static final Logger nettyLogger = LoggerFactory.getLogger("netty");
 
+    public static Logger getAppServerLogger() {
+        return appServerLogger;
+    }
+
+    public static Logger getTestLogger() {
+        return testLogger;
+    }
+
+    public static Logger getNettyLogger() {
+        return nettyLogger;
+    }
 }

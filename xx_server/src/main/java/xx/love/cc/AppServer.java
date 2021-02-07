@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.slf4j.Logger;
 import xx.love.cc.appConfig.ConfigMgr;
+import xx.love.cc.netty.NettyMgr;
 import xx.love.cc.util.LoggerUtil;
 
 /**
@@ -16,14 +17,14 @@ import xx.love.cc.util.LoggerUtil;
  */
 public class AppServer {
 
-    private static final Logger log = LoggerUtil.appServerLogger;
+    private static final Logger log = LoggerUtil.getAppServerLogger();
 
     public static AppServer appServer;
     public static String configPath;
 
     public void start() {
-        log.debug("server开始启动……");
         long startTime = System.currentTimeMillis();
+        log.debug("server开始启动……");
         boolean success = init();
         long endTime = System.currentTimeMillis();
         long time = endTime - startTime;
@@ -39,6 +40,9 @@ public class AppServer {
         log.info("初始化ing……");
         //初始化配置文件
         if (!ConfigMgr.init()) {
+            return false;
+        }
+        if (!NettyMgr.init()) {
             return false;
         }
         log.info("初始化完成！");
@@ -58,7 +62,6 @@ public class AppServer {
         //启动服务器
         appServer = new AppServer();
         appServer.start();
-        log.info("serverId: {}, port: {}", ConfigMgr.serverConfig.getServerId(), ConfigMgr.serverConfig.getPort());
     }
 
 }

@@ -19,7 +19,7 @@ import xx.love.cc.util.LoggerUtil;
  * @date 2020/9/18 19:41
  */
 public class ConfigMgr {
-    private static final Logger log = LoggerUtil.testLogger;
+    private static final Logger log = LoggerUtil.getTestLogger();
     public static ServerConfig serverConfig;
 
     public static boolean init() {
