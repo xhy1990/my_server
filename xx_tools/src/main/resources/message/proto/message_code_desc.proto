@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option optimize_for = SPEED;
+option java_package = "xx.love.cc.message";
+option java_multiple_files = true;
+
+import "google/protobuf/descriptor.proto";
+
+enum MessageCode{
+  /* === 系统消息,范围0~100 === */
+  SYS_HEART_BEAT = 0;
+
+
+  /* === 业务消息,1001开始 === */
+  //测试协议1
+  CG_TEST_1 = 1001;
+  GC_TEST_1 = 1002;
+
+  //测试协议2
+  CG_TEST_2 = 1101;
+  GC_TEST_2 = 1102;
+
+
+}
+
+extend google.protobuf.MessageOptions {
+  MessageCode message_code = 1000;
+}

@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+option optimize_for = SPEED;
+option java_package = "xx.love.cc.message.hello";
+option java_multiple_files = true;
+
+import "message/proto/message_code_desc.proto";
+
+message CGTest2 {
+  option (message_code) = CG_TEST_2;
+
+  string test2 = 1;
+}
+
+message GCTest2 {
+  option (message_code) = GC_TEST_2;
+
+  int32 age = 1;
+}
+

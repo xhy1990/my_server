@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option optimize_for = SPEED;
+option java_package = "xx.love.cc.message.base";
+option java_multiple_files = true;
+
+import "message/proto/message_code_desc.proto";
+
+message BaseProtobufMessage {
+  // 协议号
+  int32 code = 1;
+  // 业务protobuf转成的byte数据
+  string content = 2;
+}
+
+message CGTest1 {
+  option (message_code) = CG_TEST_1;
+
+  string text = 1;
+}
+
+message GCTest1 {
+  option (message_code) = GC_TEST_1;
+
+  int32 age = 1;
+}

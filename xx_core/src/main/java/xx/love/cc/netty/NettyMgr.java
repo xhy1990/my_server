@@ -15,8 +15,9 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 import org.slf4j.Logger;
 import xx.love.cc.appConfig.ConfigMgr;
-import xx.love.cc.netty.codec.GameDecoder;
-import xx.love.cc.netty.codec.GameEncoder;
+import xx.love.cc.netty.codec.MyDecoder;
+import xx.love.cc.netty.codec.MyEncoder;
+import xx.love.cc.netty.handler.GameServerIoHandler;
 import xx.love.cc.util.LoggerUtil;
 
 /**
@@ -64,10 +65,16 @@ public class NettyMgr {
                         @Override
                         protected void initChannel(NioSocketChannel ch) {
                             ch.pipeline()
-                                    .addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, Integer.BYTES, 0, Integer.BYTES))
-                                    .addLast(new GameDecoder())
+                                    .addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, Integer.BYTES, 0, 0))
+                                    .addLast(new MyDecoder())
                                     .addLast(new LengthFieldPrepender(Integer.BYTES))
-                                    .addLast(new GameEncoder());
+                                    .addLast(new MyEncoder());
+                            // 使用protobuf编解码器
+//                                    .addLast(new ProtobufVarint32FrameDecoder())
+//                                    .addLast(new ProtobufDecoder(BaseProtobufMessage.getDefaultInstance()))
+//                                    .addLast(new ProtobufVarint32LengthFieldPrepender())
+//                                    .addLast(new ProtobufEncoder());
+                            ch.pipeline().addLast(new GameServerIoHandler());
                         }
                     });
             ChannelFuture serverChannelFuture = serverBootstrap.bind(ConfigMgr.serverConfig.getPort()).sync();

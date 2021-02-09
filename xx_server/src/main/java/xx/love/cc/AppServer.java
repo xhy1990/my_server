@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.slf4j.Logger;
 import xx.love.cc.appConfig.ConfigMgr;
+import xx.love.cc.msg.MsgMgr;
 import xx.love.cc.netty.NettyMgr;
 import xx.love.cc.util.LoggerUtil;
 
@@ -40,6 +41,9 @@ public class AppServer {
         log.info("初始化ing……");
         //初始化配置文件
         if (!ConfigMgr.init()) {
+            return false;
+        }
+        if (!MsgMgr.init()) {
             return false;
         }
         if (!NettyMgr.init()) {
