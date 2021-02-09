@@ -1,11 +1,8 @@
 package xx.love.cc.netty.handler;
 
-import com.google.protobuf.Message;
 import com.google.protobuf.MessageLite;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import xx.love.cc.message.base.BaseProtobufMessage;
 import xx.love.cc.msg.IMessage;
 import xx.love.cc.msg.MsgMgr;
 
@@ -20,6 +17,7 @@ public class GameServerIoHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 通道激活时触发，当客户端connect成功后，服务端就会接收到这个事件，从而可以把客户端的Channel记录下来，供后面复用
+     *
      * @param ctx
      * @throws Exception
      */
@@ -30,6 +28,7 @@ public class GameServerIoHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * 当收到对方发来的数据后，就会触发，参数msg就是发来的信息，可以是基础类型，也可以是序列化的复杂对象。
+     *
      * @param ctx
      * @param msg
      * @throws Exception
@@ -42,7 +41,8 @@ public class GameServerIoHandler extends ChannelInboundHandlerAdapter {
 
         MessageLite messageLite = clazz.newInstance();
         messageLite.getParserForType().parseFrom(message.getBytes());
-        ctx.writeAndFlush(messageLite);
+//        ctx.writeAndFlush(messageLite);
+        ctx.writeAndFlush(message);
     }
 
 

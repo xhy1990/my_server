@@ -1,9 +1,8 @@
 package xx.love.cc;
 
-import com.google.protobuf.MessageLite;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import xx.love.cc.message.base.CGTest1;
+import xx.love.cc.msg.IMessage;
 
 /**
  * client
@@ -11,9 +10,9 @@ import xx.love.cc.message.base.CGTest1;
  * @author xhy
  * @date 2021/2/9 10:52
  */
-public class ClientHandler extends SimpleChannelInboundHandler<MessageLite> {
+public class ClientHandler extends SimpleChannelInboundHandler<IMessage> {
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, MessageLite msg) throws Exception {
-        System.out.println("Client Greeting: " + ((CGTest1) msg).getText());
+    protected void channelRead0(ChannelHandlerContext ctx, IMessage msg) throws Exception {
+        System.out.println("Client Greeting: " + msg.getCode());
     }
 }

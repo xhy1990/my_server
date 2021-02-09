@@ -13,6 +13,8 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 import xx.love.cc.message.base.CGTest1;
+import xx.love.cc.msg.GameMessage;
+import xx.love.cc.msg.IMessage;
 import xx.love.cc.netty.codec.MyDecoder;
 import xx.love.cc.netty.codec.MyEncoder;
 
@@ -74,7 +76,10 @@ public class AppClient {
             if (index % 5 == 0) {
 //                BaseProtobufMessage msg = BaseProtobufMessage.newBuilder().setCode(1000).setContent("hahahaa" + index).build();
                 CGTest1 msg = CGTest1.newBuilder().setText("hahahaa" + index).build();
-                channel.writeAndFlush(msg);
+                IMessage message = new GameMessage();
+                message.setCode(1001);
+                message.setBytes(msg.toByteArray());
+                channel.writeAndFlush(message);
                 System.out.println("Client sent" + index);
             }
         }
