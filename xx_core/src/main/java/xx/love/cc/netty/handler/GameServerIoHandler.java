@@ -3,6 +3,7 @@ package xx.love.cc.netty.handler;
 import com.google.protobuf.MessageLite;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import xx.love.cc.message.base.CGTest1;
 import xx.love.cc.msg.IMessage;
 import xx.love.cc.msg.MsgMgr;
 
@@ -38,10 +39,11 @@ public class GameServerIoHandler extends ChannelInboundHandlerAdapter {
         IMessage message = (IMessage) msg;
         Class<MessageLite> clazz = (Class<MessageLite>) MsgMgr.getMessageClass(message.getCode());
         System.out.println("收到客户端消息，code=" + message.getCode());
-
-        MessageLite messageLite = clazz.newInstance();
-        messageLite.getParserForType().parseFrom(message.getBytes());
-//        ctx.writeAndFlush(messageLite);
+        //目前无法解决根据类型获得具体对象，此方法原理可行，但是暂时无法继续实践
+        CGTest1 cgTest1 = CGTest1.parseFrom(message.getBytes());
+        System.out.println("收到客户端消息，text=" + cgTest1.getText());
+//        MessageLite messageLite = clazz.newInstance();
+//        messageLite.getParserForType().parseFrom(message.getBytes());
         ctx.writeAndFlush(message);
     }
 

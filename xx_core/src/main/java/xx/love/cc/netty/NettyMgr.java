@@ -65,7 +65,7 @@ public class NettyMgr {
                         @Override
                         protected void initChannel(NioSocketChannel ch) {
                             ch.pipeline()
-                                    .addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, Integer.BYTES, 0, 0))
+                                    .addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, Integer.BYTES, 0, 4))
                                     .addLast(new MyDecoder())
                                     .addLast(new LengthFieldPrepender(Integer.BYTES))
                                     .addLast(new MyEncoder());

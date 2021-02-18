@@ -15,6 +15,7 @@ import io.netty.handler.codec.LengthFieldPrepender;
 import xx.love.cc.message.base.CGTest1;
 import xx.love.cc.msg.GameMessage;
 import xx.love.cc.msg.IMessage;
+import xx.love.cc.msg.MsgMgr;
 import xx.love.cc.netty.codec.MyDecoder;
 import xx.love.cc.netty.codec.MyEncoder;
 
@@ -26,6 +27,7 @@ import xx.love.cc.netty.codec.MyEncoder;
  */
 public class AppClient {
     public static void main(String[] args) throws InterruptedException, IOException {
+        MsgMgr.init();
         EventLoopGroup workGroup = new NioEventLoopGroup(1);
         int serverPort = 7777;
         try {
@@ -37,7 +39,7 @@ public class AppClient {
                         @Override
                         protected void initChannel(NioSocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
-                            pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, Integer.BYTES, 0, 0))
+                            pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, Integer.BYTES, 0, 4))
                                     .addLast(new MyDecoder())
                                     .addLast(new LengthFieldPrepender(Integer.BYTES))
                                     .addLast(new MyEncoder());

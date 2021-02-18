@@ -13,6 +13,6 @@ import xx.love.cc.msg.IMessage;
 public class ClientHandler extends SimpleChannelInboundHandler<IMessage> {
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, IMessage msg) throws Exception {
-        System.out.println("Client Greeting: " + msg.getCode());
+        System.out.println("Client Getting: " + msg.getCode());
     }
 }

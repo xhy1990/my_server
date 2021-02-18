@@ -1,12 +1,9 @@
 package xx.love.cc.netty.codec;
 
-import java.util.List;
-
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToMessageEncoder;
+import io.netty.handler.codec.MessageToByteEncoder;
 import xx.love.cc.msg.IMessage;
-
-import static io.netty.buffer.Unpooled.wrappedBuffer;
 
 /**
  * 编码器
@@ -14,16 +11,27 @@ import static io.netty.buffer.Unpooled.wrappedBuffer;
  * @author xhy
  * @date 2021/2/7 18:25
  */
-public class MyEncoder extends MessageToMessageEncoder<IMessage> {
+public class MyEncoder extends MessageToByteEncoder<IMessage> {
+
+//    @Override
+//    protected void encode(ChannelHandlerContext ctx, IMessage msg, List<Object> out) throws Exception {
+//        //先获取消息对应的枚举编号
+////        int messageId = msg.getCode();
+//        int code = msg.getCode();
+//        byte[] bytes = msg.getBytes();
+////        System.out.println("1:" + bytes.length);
+//        out.add(ctx.alloc().buffer(4).writeInt(code));
+//        out.add(wrappedBuffer(bytes));
+//    }
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, IMessage msg, List<Object> out) throws Exception {
+    protected void encode(ChannelHandlerContext ctx, IMessage msg, ByteBuf out) throws Exception {
         //先获取消息对应的枚举编号
 //        int messageId = msg.getCode();
         int code = msg.getCode();
         byte[] bytes = msg.getBytes();
 //        System.out.println("1:" + bytes.length);
-        out.add(code);
-        out.add(wrappedBuffer(bytes));
+        out.writeInt(code);
+        out.writeBytes(bytes);
     }
 }
